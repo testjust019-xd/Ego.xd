@@ -1,0 +1,210 @@
+:root {
+  --bg: #04070F;
+  --panel: rgba(10, 14, 26, 0.82);
+  --panel-2: rgba(14, 19, 34, 0.9);
+  --border: rgba(255, 255, 255, 0.08);
+  --accent: #8B5CF6;      /* remplacé dynamiquement selon le thème actif */
+  --accent-2: #3B82F6;
+  --text: #ffffff;
+  --muted: rgba(255, 255, 255, 0.45);
+  --green: #22C55E;
+  --red: #EF4444;
+  --gold: #FBBF24;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Manrope", system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+.mono { font-family: "JetBrains Mono", ui-monospace, monospace; letter-spacing: 0.06em; }
+.tiny { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; }
+.muted { color: var(--muted); }
+.bold { font-weight: 700; }
+.hidden { display: none !important; }
+
+/* ── Fond ── */
+.bg-layer { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.orb { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.32; transition: background 0.6s ease; }
+.orb-a { width: 420px; height: 420px; background: var(--accent); top: -140px; left: -100px; }
+.orb-b { width: 380px; height: 380px; background: var(--accent-2); bottom: -160px; right: -80px; }
+.grid-overlay {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(ellipse at 50% 0%, black 0%, transparent 70%);
+}
+
+.wrap { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 32px 20px 60px; }
+
+/* ── Header ── */
+.hero { text-align: center; margin-bottom: 32px; }
+.badge-row { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border: 1px solid var(--border); border-radius: 999px; background: var(--panel); margin-bottom: 20px; }
+.live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); animation: pulse 1.8s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+.title {
+  font-family: "Rajdhani", sans-serif;
+  font-weight: 700;
+  font-size: 52px;
+  line-height: 1.05;
+  display: flex; flex-direction: column; align-items: center;
+  text-transform: uppercase;
+}
+.grad {
+  background: linear-gradient(90deg, var(--accent-2), var(--accent));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  letter-spacing: 0.03em;
+}
+.sub-title { font-size: 20px; color: var(--muted); font-weight: 600; letter-spacing: 0.3em; margin-top: 4px; }
+.tagline { margin-top: 16px; color: var(--muted); font-size: 13px; }
+
+/* ── Cartes de domaine (générées depuis /api/themes) ── */
+.domains { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 32px; }
+.domains-loading { grid-column: 1 / -1; text-align: center; padding: 20px; }
+.domain-card {
+  position: relative;
+  text-align: left;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  cursor: pointer;
+  display: flex; align-items: flex-start; gap: 12px;
+  overflow: hidden;
+  transition: border-color .2s ease, transform .15s ease;
+  color: inherit;
+  font: inherit;
+}
+.domain-card:hover { transform: translateY(-2px); }
+.domain-card.active { border-color: var(--card-c, var(--accent)); }
+.domain-icon {
+  width: 40px; height: 40px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--card-c, var(--accent)) 20%, transparent);
+  color: var(--card-c, var(--accent));
+  font-size: 18px; font-weight: 700;
+}
+.domain-meta { flex: 1; min-width: 0; }
+.domain-name { font-family: "Rajdhani", sans-serif; font-weight: 700; font-size: 15px; letter-spacing: 0.04em; }
+.domain-title { font-family: "JetBrains Mono", monospace; font-size: 9px; color: var(--muted); letter-spacing: 0.18em; margin-top: 2px; text-transform: uppercase; }
+.domain-quote { font-size: 11px; color: var(--muted); margin-top: 8px; line-height: 1.4; font-style: italic; }
+.domain-bar { position: absolute; left: 0; bottom: 0; width: 100%; height: 2px; background: var(--card-c, var(--accent)); opacity: 0.6; }
+.domain-card.active .domain-bar { opacity: 1; }
+
+/* ── Layout principal ── */
+.layout { display: grid; grid-template-columns: 1.3fr 1fr; gap: 20px; align-items: start; }
+@media (max-width: 860px) { .layout { grid-template-columns: 1fr; } }
+
+.panel { background: var(--panel); border: 1px solid var(--border); border-radius: 18px; padding: 22px; backdrop-filter: blur(14px); }
+.panel + .panel { margin-top: 16px; }
+.panel-head { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.panel-head.tight { margin-bottom: 14px; justify-content: space-between; }
+.icon-box { width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; border-radius: 12px; background: color-mix(in srgb, var(--accent) 18%, transparent); font-size: 18px; }
+.dots { margin-left: auto; display: flex; gap: 5px; }
+.dots span { width: 6px; height: 6px; border-radius: 50%; background: var(--border); }
+
+/* ── Formulaire de pairing ── */
+.field { display: block; margin-bottom: 16px; }
+.field > span { display: block; margin-bottom: 8px; }
+.input-shell { display: flex; align-items: center; gap: 8px; border: 1px solid var(--border); border-radius: 12px; padding: 4px 4px 4px 14px; background: rgba(255,255,255,0.03); transition: border-color .2s ease; }
+.input-shell:focus-within { border-color: var(--accent); }
+.prefix { color: var(--muted); font-weight: 600; }
+.input-shell input { flex: 1; background: transparent; border: none; outline: none; color: var(--text); font-size: 16px; padding: 12px 8px; font-family: "JetBrains Mono", monospace; }
+
+.awaken-btn {
+  position: relative; overflow: hidden;
+  width: 100%; padding: 16px; border: none; border-radius: 12px;
+  background: linear-gradient(90deg, var(--accent-2), var(--accent));
+  color: #fff; font-family: "Rajdhani", sans-serif; font-weight: 700; font-size: 15px; letter-spacing: 0.08em;
+  display: flex; align-items: center; justify-content: space-between;
+  cursor: pointer; transition: opacity .2s ease;
+}
+.awaken-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn-icons { font-size: 13px; opacity: 0.85; }
+.btn-shimmer { position: absolute; inset: 0; background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.25) 50%, transparent 70%); transform: translateX(-100%); animation: shimmer 3s infinite; }
+@keyframes shimmer { to { transform: translateX(100%); } }
+
+.result { margin-top: 16px; padding: 16px; border-radius: 12px; border: 1px solid var(--border); }
+.result.error { border-color: var(--red); color: var(--red); }
+.result.success { border-color: var(--accent); }
+.result-code { display: block; font-family: "JetBrains Mono", monospace; font-size: 28px; font-weight: 700; letter-spacing: 0.1em; text-align: center; margin: 12px 0; color: var(--accent); }
+.hint { font-size: 12px; color: var(--muted); line-height: 1.5; }
+.timer-chip { display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: 999px; border: 1px solid var(--border); font-family: "JetBrains Mono", monospace; font-size: 10px; }
+.copy-row { margin-top: 12px; }
+.copy-btn { width: 100%; padding: 10px; border-radius: 10px; border: 1px solid var(--border); background: rgba(255,255,255,0.06); color: var(--text); font-family: "JetBrains Mono", monospace; font-size: 12px; letter-spacing: 0.1em; cursor: pointer; }
+.copy-btn:hover { background: rgba(255,255,255,0.12); }
+
+.steps { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 20px; }
+.step { display: flex; gap: 10px; align-items: flex-start; }
+.step .n { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--accent); font-weight: 700; margin-top: 2px; }
+.step strong { display: block; font-size: 13px; margin-bottom: 2px; font-family: "Rajdhani", sans-serif; font-weight: 700; letter-spacing: 0.02em; }
+.step p { font-size: 11px; color: var(--muted); line-height: 1.4; }
+
+/* ── Stats / feed / liens ── */
+.online { display: inline-flex; align-items: center; gap: 6px; font-family: "JetBrains Mono", monospace; font-size: 10px; color: var(--green); letter-spacing: 0.12em; }
+.stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 18px; }
+.stat-card { border: 1px solid var(--border); border-radius: 12px; padding: 12px; background: rgba(255,255,255,0.02); }
+.stat-val { font-family: "Rajdhani", sans-serif; font-size: 26px; font-weight: 700; margin: 4px 0; color: var(--accent); }
+
+.focus-line { display: flex; align-items: center; gap: 12px; padding-top: 14px; border-top: 1px solid var(--border); }
+.focus-avatar { width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, var(--accent-2), var(--accent)); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+.focus-pulse { margin-left: auto; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+
+.rec-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red); animation: pulse 1.4s infinite; }
+.feed { display: flex; flex-direction: column; gap: 10px; max-height: 200px; overflow-y: auto; }
+.feed-item { display: flex; gap: 10px; font-size: 12px; line-height: 1.5; }
+.feed-item .t { font-family: "JetBrains Mono", monospace; font-size: 10px; color: var(--muted); flex-shrink: 0; margin-top: 2px; }
+.feed-item b { font-family: "JetBrains Mono", monospace; font-size: 10px; letter-spacing: 0.1em; }
+
+.mb { margin-bottom: 10px; }
+.link-row { display: block; padding: 10px 0; color: var(--text); text-decoration: none; font-size: 13px; border-bottom: 1px solid var(--border); transition: color .2s ease; }
+.link-row:last-child { border-bottom: none; }
+.link-row:hover { color: var(--accent); }
+
+.foot { text-align: center; margin-top: 40px; }
+
+/* ── Chatbot flottant ── */
+.chat-root { position: fixed; bottom: 20px; right: 20px; z-index: 50; }
+.chat-toggle {
+  position: relative; width: 56px; height: 56px; border-radius: 50%; border: none;
+  background: linear-gradient(135deg, var(--accent-2), var(--accent));
+  color: #fff; font-size: 22px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+.chat-toggle-pulse { position: absolute; inset: -4px; border-radius: 50%; border: 2px solid var(--accent); opacity: 0.5; animation: pulse 2s infinite; }
+.chat-panel {
+  position: absolute; bottom: 70px; right: 0;
+  width: min(340px, 90vw); height: min(460px, 70vh);
+  background: var(--panel-2); border: 1px solid var(--border); border-radius: 18px;
+  display: flex; flex-direction: column; overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.chat-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid var(--border); }
+.chat-header-left { display: flex; align-items: center; gap: 10px; }
+.chat-avatar { width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, var(--accent-2), var(--accent)); display: flex; align-items: center; justify-content: center; font-size: 14px; }
+.chat-title { font-size: 13px; }
+.chat-close { background: none; border: none; color: var(--muted); font-size: 16px; cursor: pointer; }
+.chat-messages { flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+.chat-bubble { max-width: 85%; padding: 10px 12px; border-radius: 12px; font-size: 13px; line-height: 1.5; }
+.chat-bubble.bot { align-self: flex-start; background: rgba(255,255,255,0.06); border: 1px solid var(--border); }
+.chat-bubble.user { align-self: flex-end; background: linear-gradient(90deg, var(--accent-2), var(--accent)); }
+.chat-bubble.typing { color: var(--muted); }
+.chat-form { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--border); }
+.chat-form input { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; color: var(--text); font-size: 13px; outline: none; }
+.chat-form input:focus { border-color: var(--accent); }
+.chat-send { background: linear-gradient(90deg, var(--accent-2), var(--accent)); border: none; border-radius: 10px; padding: 0 14px; color: #fff; font-family: "JetBrains Mono", monospace; font-size: 11px; font-weight: 700; cursor: pointer; }
+
+@media (max-width: 480px) {
+  .title { font-size: 38px; }
+  .steps { grid-template-columns: 1fr; }
+}

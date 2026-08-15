@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>EGO.XD Admin</title>
+<style>
+body{font-family:system-ui;background:#0b0b12;color:#e2e8f0;margin:0;padding:16px}
+h1{font-size:18px;color:#8b5cf6}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.card{background:#141422;border-radius:12px;padding:14px;border:1px solid rgba(255,255,255,.06)}
+.card .n{font-size:22px;font-weight:800}
+.card .l{font-size:11px;color:#94a3b8;text-transform:uppercase}
+pre{background:#0f0f18;padding:12px;border-radius:8px;font-size:11px;overflow:auto;max-height:280px}
+.muted{color:#94a3b8;font-size:12px}
+</style>
+</head>
+<body>
+<h1>EGO.XD — Admin</h1>
+<div class="grid" id="kpis"></div>
+<div class="card"><div class="l">Dernières parties</div><pre id="hist">…</pre></div>
+<div class="card" style="margin-top:12px"><div class="l">Logs récents</div><pre id="logs">…</pre></div>
+<p class="muted" id="meta"></p>
+<script>
+const token = new URLSearchParams(location.search).get('token')||'';
+async function load(){
+  const r=await fetch('/api/admin/stats?token='+encodeURIComponent(token));
+  if(!r.ok){document.body.innerHTML='<p style="color:#ef4444">Unauthorized</p>';return;}
+  const d=await r.json();
+  document.getElementById('kpis').innerHTML=`
+    <div class="card"><div class="n">${d.uptime}s</div><div class="l">Uptime</div></div>
+    <div class="card"><div class="n">${d.socketClients}</div><div class="l">Sockets</div></div>
+    <div class="card"><div class="n">${d.history?.total||0}</div><div class="l">Parties histor.</div></div>
+    <div class="card"><div class="n">${d.lastError? '⚠':'✓'}</div><div class="l">Last error</div></div>`;
+  document.getElementById('hist').textContent=(d.recent||[]).map(e=>`${new Date(e.ts).toISOString().slice(11,19)} ${e.type} — ${e.summary}`).join('\n')||'—';
+  document.getElementById('logs').textContent=(d.logs||[]).slice(-25).join('\n')||'—';
+  document.getElementById('meta').textContent=d.lastError?('Last error: '+d.lastError):'OK';
+}
+load(); setInterval(load, 8000);
+</script>
+</body>
+</html>

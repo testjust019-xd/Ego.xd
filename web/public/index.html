@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EGO.XD — System Gate</title>
+  <!-- Hub: /hub -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="bg-layer">
+    <div class="orb orb-a"></div>
+    <div class="orb orb-b"></div>
+    <div class="grid-overlay"></div>
+  </div>
+
+  <main class="wrap">
+    <div style="text-align:right;padding:12px 16px;position:relative;z-index:5"><a href="/hub" style="color:#22d3ee;font-family:monospace;font-size:12px;text-decoration:none">⌘ HUB CONNECTÉ →</a></div>
+  <header class="hero">
+      <div class="badge-row">
+        <span class="live-dot"></span>
+        <span class="mono tiny" id="system-tag">EGO.XD SYSTEM // ONLINE</span>
+      </div>
+      <h1 class="title">
+        <span class="grad" id="hero-title">EGO.XD</span>
+        <span class="sub-title" id="hero-sub">SYSTEM WINDOW</span>
+      </h1>
+      <p class="tagline mono" id="hero-quote">「 Sélectionne ton domaine — awaken or be forgotten. 」</p>
+    </header>
+
+    <section class="domains" id="domains">
+      <div class="domains-loading mono tiny muted">Chargement des domaines…</div>
+    </section>
+
+    <div class="layout">
+      <section class="panel gate">
+        <div class="panel-head">
+          <div class="icon-box">⛩</div>
+          <div>
+            <div class="mono bold">SYSTEM GATE</div>
+            <div class="mono tiny muted">ENTRE TON NUMÉRO — AWAKEN LE BOT</div>
+          </div>
+          <div class="dots"><span></span><span></span><span></span></div>
+        </div>
+
+        <form id="pair-form" class="pair-form" autocomplete="off">
+          <label class="field">
+            <span class="mono tiny muted">NUMÉRO (international, sans +)</span>
+            <div class="input-shell" id="input-shell">
+              <span class="prefix mono">+</span>
+              <input
+                id="phone"
+                name="phone"
+                type="tel"
+                inputmode="numeric"
+                placeholder="2250XXXXXXXX"
+                maxlength="15"
+                required
+              />
+            </div>
+          </label>
+
+          <button type="submit" id="generate-btn" class="awaken-btn">
+            <span class="btn-label">GÉNÉRER LE CODE</span>
+            <span class="btn-icons">⚔ 🌑 ⚽</span>
+            <span class="btn-shimmer"></span>
+          </button>
+        </form>
+
+        <div id="result" class="result hidden" aria-live="polite"></div>
+
+        <div class="steps">
+          <div class="step"><span class="n">01</span><div><strong>Ouvre WhatsApp</strong><p>Appareils liés → Lier un appareil</p></div></div>
+          <div class="step"><span class="n">02</span><div><strong>Lier avec un numéro</strong><p>Choisis "Lier avec un numéro de téléphone"</p></div></div>
+          <div class="step"><span class="n">03</span><div><strong>Entre le code</strong><p>Copie-colle le code généré ci-dessus</p></div></div>
+          <div class="step"><span class="n">04</span><div><strong>C'est fait</strong><p>Le bot est connecté à ton compte</p></div></div>
+        </div>
+      </section>
+
+      <aside class="side">
+        <section class="panel stats-panel">
+          <div class="panel-head tight">
+            <span class="mono tiny muted">EGO.XD SYSTEM // LIVE</span>
+            <span class="online"><span class="live-dot"></span> ONLINE</span>
+          </div>
+          <div class="stat-grid">
+            <div class="stat-card">
+              <div class="mono tiny muted">SESSIONS</div>
+              <div class="stat-val" id="stat-sessions">—</div>
+              <div class="mono tiny muted">total</div>
+            </div>
+            <div class="stat-card">
+              <div class="mono tiny muted">CONNECTÉS</div>
+              <div class="stat-val" id="stat-connected">—</div>
+              <div class="mono tiny muted">live</div>
+            </div>
+            <div class="stat-card">
+              <div class="mono tiny muted">DOMAINES</div>
+              <div class="stat-val" id="stat-domains">—</div>
+              <div class="mono tiny muted">dispo</div>
+            </div>
+            <div class="stat-card">
+              <div class="mono tiny muted">RANG</div>
+              <div class="stat-val">∞</div>
+              <div class="mono tiny muted">system</div>
+            </div>
+          </div>
+          <div class="focus-line">
+            <div class="focus-avatar" id="focus-avatar">⛩</div>
+            <div>
+              <div class="mono tiny muted">DOMAINE ACTIF</div>
+              <div class="mono bold" id="focus-name">—</div>
+            </div>
+            <span class="focus-pulse" id="focus-pulse"></span>
+          </div>
+        </section>
+
+        <section class="panel feed-panel">
+          <div class="panel-head tight">
+            <span class="mono tiny muted">TRANSMISSIONS</span>
+            <span class="rec-dot"></span>
+          </div>
+          <div class="feed" id="feed">
+            <div class="feed-item"><span class="t">00:00</span><div><b style="color:var(--accent)">SYSTEM</b> Gate ouverte — en attente de connexion.</div></div>
+            <div class="feed-item"><span class="t">00:01</span><div><b style="color:var(--accent)">SYSTEM</b> Jeux web, statuts, cartes — tout est lié au bot.</div></div>
+            <div class="feed-item"><span class="t">00:02</span><div><b style="color:var(--accent)">SYSTEM</b> Résonance stable.</div></div>
+          </div>
+        </section>
+
+        <section class="panel store-panel">
+          <div class="mono tiny muted mb">LIENS // CREATOR</div>
+          <a class="link-row" href="https://jolly-taiyaki-27b8c9.netlify.app/" target="_blank" rel="noopener">🛒 Magasin digital</a>
+          <a class="link-row" href="https://www.youtube.com/@devilskills-e7c" target="_blank" rel="noopener">▶ Devil Skills</a>
+          <a class="link-row" href="https://www.youtube.com/@SoccerVibe19" target="_blank" rel="noopener">▶ Soccer Vibe</a>
+          <a class="link-row" href="/top" rel="noopener">🏆 Classement</a>
+        </section>
+      </aside>
+    </div>
+
+    <footer class="foot mono tiny muted">
+      EGO.XD © SYSTEM WINDOW — TOUS DOMAINES CONFONDUS
+    </footer>
+  </main>
+
+  <div id="chat-root" class="chat-root">
+    <button type="button" id="chat-toggle" class="chat-toggle" aria-label="Ouvrir le chat IA">
+      <span class="chat-toggle-icon">⛩</span>
+      <span class="chat-toggle-pulse"></span>
+    </button>
+    <div id="chat-panel" class="chat-panel hidden" role="dialog" aria-label="Chatbot EGO.XD">
+      <div class="chat-header">
+        <div class="chat-header-left">
+          <div class="chat-avatar">⛩</div>
+          <div>
+            <div class="mono bold chat-title">EGO AI</div>
+            <div class="mono tiny muted">SYSTEM ASSISTANT</div>
+          </div>
+        </div>
+        <button type="button" id="chat-close" class="chat-close" aria-label="Fermer">✕</button>
+      </div>
+      <div id="chat-messages" class="chat-messages">
+        <div class="chat-bubble bot">
+          Yo. Je suis l'IA d'EGO.XD.<br/>
+          Pairing, rangs, magasin, commandes — demande.
+        </div>
+      </div>
+      <form id="chat-form" class="chat-form" autocomplete="off">
+        <input id="chat-input" type="text" maxlength="800" placeholder="Écris ton message…" required />
+        <button type="submit" id="chat-send" class="chat-send">SEND</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="/script.js"></script>
+</body>
+</html>

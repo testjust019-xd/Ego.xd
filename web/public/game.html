@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>EGO.XD — Partie en direct</title>
+<link rel="stylesheet" href="/css/game.css" />
+</head>
+<body>
+  <div class="bg-layer"><div class="orb orb-a"></div><div class="orb orb-b"></div></div>
+
+  <header class="topbar">
+    <div class="brand">EGO<span>.XD</span></div>
+    <div id="connStatus" class="status status-connecting">Connexion…</div>
+  </header>
+
+  <main id="app" class="app">
+    <div class="loading">Chargement de la partie…</div>
+  </main>
+
+  <footer class="footer tiny muted">Propulsé par EGO.XD — la partie se ferme automatiquement après un moment d'inactivité</footer>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/game-client.js"></script>
+</body>
+</html>

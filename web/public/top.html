@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>EGO.XD — Classement</title>
+<style>
+body{font-family:system-ui;background:#0b0b12;color:#e2e8f0;margin:0;padding:20px;max-width:480px;margin-inline:auto}
+h1{font-size:20px;color:#8b5cf6}
+.row{display:flex;align-items:center;gap:12px;padding:12px;background:#141422;border-radius:10px;margin-bottom:8px}
+.rank{font-weight:800;width:28px;color:#f59e0b}
+.name{flex:1}.bal{font-weight:700;color:#22c55e}
+</style>
+</head>
+<body>
+<h1>🏆 Classement</h1>
+<div id="list">Chargement…</div>
+<script>
+fetch('/api/top?limit=20').then(r=>r.json()).then(d=>{
+  document.getElementById('list').innerHTML=(d.top||[]).map(u=>
+    `<div class="row"><div class="rank">#${u.rank}</div><div class="name">${u.name}</div><div class="bal">${u.balance} pts</div></div>`
+  ).join('')||'Vide';
+});
+</script>
+</body>
+</html>

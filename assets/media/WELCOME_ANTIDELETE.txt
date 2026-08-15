@@ -1,0 +1,23 @@
+Welcome / Goodbye / Antidelete
+==============================
+
+Médias optionnels (si le membre n'a PAS de photo de profil) :
+
+  assets/media/welcome.png   (ou .jpg .webp .mp4 .gif)
+  assets/media/welcome.mp3   (ambiance, envoyé en plus)
+  assets/media/goodbye.png
+  assets/media/goodbye.mp4
+
+Priorité welcome :
+  1. Photo de profil WhatsApp du membre
+  2. assets/media/welcome.(vidéo|image)
+  3. Texte seul
+
+Commandes (admin groupe) :
+  .welcome on|off
+  .welcome set Bienvenue @user dans {group} ({count} membres)
+  .goodbye on|off
+  .goodbye set @user a quitté {group}
+  .antidelete on|off   → republie texte + image + vidéo + audio + sticker + doc
+
+Antidelete : cache ~45 min, max 120 messages / groupe.

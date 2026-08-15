@@ -1,0 +1,11 @@
+EGO.XD — zip corrigé (pairing + SESSION_DIR + force + guide VPS Oracle)
+
+Changements principaux :
+1. config.js — publicUrl, sessionDir, pairing via variables d'environnement
+2. lib/sessionManager.js — mkdir, SESSION_DIR, option force, meilleurs logs/erreurs
+3. index.js — session principale dans config.sessionDir/main
+4. start.js — /api/pair accepte force:true
+5. DEPLOY_VPS_GRATUIT.md — guide Oracle Cloud Free Tier
+6. .env.example
+
+Sur VPS : disque local = sessions persistantes automatiquement.

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>EGO.XD — Album</title>
+<style>
+body{font-family:system-ui;background:#0b0b12;color:#e2e8f0;margin:0;padding:20px;max-width:480px;margin-inline:auto}
+h1{font-size:20px;color:#8b5cf6}
+.grid{display:flex;flex-wrap:wrap;gap:8px}
+.card{background:#141422;border-radius:10px;padding:10px 12px;font-size:13px;border:1px solid rgba(255,255,255,.06)}
+.muted{color:#94a3b8;font-size:13px}
+</style>
+</head>
+<body>
+<h1>🃏 Album</h1>
+<p class="muted" id="meta">…</p>
+<div class="grid" id="grid"></div>
+<script>
+const jid=location.pathname.split('/').pop();
+fetch('/api/album/'+encodeURIComponent(jid)).then(r=>r.json()).then(d=>{
+  document.getElementById('meta').textContent=`${d.count||0} carte(s) · ${d.balance||0} pts · ${String(d.jid||'').split('@')[0]}`;
+  document.getElementById('grid').innerHTML=(d.cards||[]).map(c=>
+    `<div class="card">${c.emoji||'🃏'} ${c.name||c}</div>`
+  ).join('')||'<p class="muted">Aucune carte</p>';
+});
+</script>
+</body>
+</html>
